@@ -2,6 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const path = require("path");
 const { AllRouter } = require("./router/router");
+const morgan = require("morgan");
 module.exports = class Application {
   #app = express();
   #DB_URI;
@@ -16,6 +17,7 @@ module.exports = class Application {
     this.errorHandling();
   }
   configApplication() {
+    this.#app.use(morgan("dev"));
     this.#app.use(express.json());
     this.#app.use(express.urlencoded({ extended: true }));
     this.#app.use(express.static(path.join(__dirname, "..", "public")));
@@ -31,8 +33,23 @@ module.exports = class Application {
       .connect(this.#DB_URI)
       .then(() => console.log("Connect to DB successfully...."))
       .catch((err) => {
-        throw err;
+        console.log(err.message);
       });
+
+    mongoose.connection.on("connected", () => {
+      console.log("mongoose connected To DB");
+    });
+
+    mongoose.connection.on("disconnected", () => {
+      console.log("mongoose connection is disconnected");
+    });
+
+    process.on("SIGINT", async () => {
+      await mongoose.connection.close();
+      console.log("disconnected");
+
+      process.exit(0);
+    });
   }
   createRoutes() {
     this.#app.use(AllRouter);
