@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const path = require("path");
+const { AllRouter } = require("./router/router");
 module.exports = class Application {
   #app = express();
   #DB_URI;
@@ -33,7 +34,9 @@ module.exports = class Application {
         throw err;
       });
   }
-  createRoutes() {}
+  createRoutes() {
+    this.#app.use(AllRouter);
+  }
   errorHandling() {
     this.#app.use((req, res, next) => {
       return res.status(404).json({
