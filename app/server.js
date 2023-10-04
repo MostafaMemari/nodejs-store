@@ -4,6 +4,8 @@ const path = require("path");
 const { AllRouter } = require("./router/router");
 const morgan = require("morgan");
 const createError = require("http-errors");
+const swaggerUI = require("swagger-ui-express");
+const swaggerJsDoc = require("swagger-jsdoc");
 module.exports = class Application {
   #app = express();
   #DB_URI;
@@ -22,6 +24,32 @@ module.exports = class Application {
     this.#app.use(express.json());
     this.#app.use(express.urlencoded({ extended: true }));
     this.#app.use(express.static(path.join(__dirname, "..", "public")));
+    this.#app.use(
+      "/api-doc",
+      swaggerUI.serve,
+      swaggerUI.setup(
+        swaggerJsDoc({
+          swaggerDefinition: {
+            info: {
+              title: "store shop",
+              version: "1.0.0",
+              description: "بزرگترین مرجع فروشگاهی ایران",
+              contact: {
+                name: "Mostafa Memari",
+                url: "https://www.google.com",
+                email: "m.memari7@yahoo.com",
+              },
+            },
+            servers: [
+              {
+                url: "http://localhost:5000",
+              },
+            ],
+          },
+          apis: ["./app/router/*/*.js"],
+        })
+      )
+    );
   }
   createServer() {
     const http = require("http");
