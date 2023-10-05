@@ -1,7 +1,7 @@
 const createHttpError = require("http-errors");
 const JWT = require("jsonwebtoken");
 const { UserModel } = require("../models/user");
-const { SECRET_KEY } = require("./constans");
+const { ACCESS_TOKEN_SECRET_KEY } = require("./constans");
 function randomNumberGenerator() {
   return Math.floor(Math.random() * 90000 + 10000);
 }
@@ -10,10 +10,9 @@ function signAccessToken(userID) {
     const user = await UserModel.findById(userID);
     const payload = {
       mobile: user.mobile,
-      userID: user._id,
     };
     const options = { expiresIn: "1h" };
-    JWT.sign(payload, SECRET_KEY, options, (err, token) => {
+    JWT.sign(payload, ACCESS_TOKEN_SECRET_KEY, options, (err, token) => {
       if (err) reject(createHttpError.InternalServerError("خطای سروری"));
       resolve(token);
     });
