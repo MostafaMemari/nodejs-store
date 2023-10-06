@@ -29,6 +29,7 @@ class UserAuthController extends Controller {
     try {
       await checkOtpSchema.validateAsync(req.body);
       const { mobile, code } = req.body;
+
       const user = await UserModel.findOne({ mobile });
       if (!user) throw createHttpError.NotFound("کاربر یافت نشد");
       if (user.otp.code != code) throw createHttpError.Unauthorized("کد ارسال شده صحیح نمی باشد");
@@ -49,7 +50,7 @@ class UserAuthController extends Controller {
   async saveUser(mobile, code) {
     let otp = {
       code,
-      expiresIn: EXPIRES_IN,
+      expiresIn: new Date().getTime() + 120000,
     };
     const result = await this.checkExistUser(mobile);
     if (result) {

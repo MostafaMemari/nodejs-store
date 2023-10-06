@@ -1,3 +1,4 @@
+const redisClient = require("../utils/init-redis");
 const { HomeRoutes } = require("./api");
 const { UserAuthRouter } = require("./user/auth");
 
