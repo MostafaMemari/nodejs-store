@@ -7,6 +7,7 @@ const { verifyAccessToken } = require("../../http/middlewares/verifyAccessToken"
  *  name : IndexPage
  *  description : index page route and data
  */
+
 /**
  * @swagger
  * /:
