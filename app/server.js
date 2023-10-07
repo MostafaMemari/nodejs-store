@@ -94,6 +94,8 @@ module.exports = class Application {
       next(createError.NotFound("صفحه مورد نظر یافت نشد"));
     });
     this.#app.use((error, req, res, next) => {
+      console.log(error);
+
       const serverError = createError.InternalServerError();
       const statusCode = error.status || serverError.status;
       const message = error.message || serverError.message;
