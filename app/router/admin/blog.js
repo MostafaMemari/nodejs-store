@@ -25,7 +25,6 @@ router.get("/add", AdminBlogController.getListOfBlogs);
  *    summary: create blog document
  *    consumes:
  *      - multioart/form-data
- *      - application/x-www-form-data-urlencoded
  *    parameters:
  *      - in: formData
  *        name: title

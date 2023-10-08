@@ -10,7 +10,7 @@ const createBlogSchema = Joi.object({
     .error(createHttpError.BadRequest("تصویر ارسال شده صحیح نمیباشد")),
   tags: Joi.array().min(0).max(20).error(createHttpError.BadRequest("برچسب ها نمیتواند بیشتر از 20 ایتم باشد")),
   category: Joi.string().pattern(MongoIDPatern).error(createHttpError.BadRequest("دسته بندی مورد نظر یافت نشد")),
-  // fileUploadPath: Joi.allow(),
+  fileUploadPath: Joi.allow(),
 });
 
 module.exports = {
