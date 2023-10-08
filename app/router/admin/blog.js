@@ -10,12 +10,19 @@ const router = require("express").Router();
  *  get:
  *    tags: [Blog(AdminPanel)]
  *    summary: get all blogs
+ *    parameters:
+ *      - in: header
+ *        example : Bearer Token...
+ *        name: access-token
+ *        required: true
+ *        type: string
+ *        value : Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtb2JpbGUiOiIwOTM4ODM2NjUxMCIsImlhdCI6MTY5Njc4MjE2MSwiZXhwIjoxNjk3Mzg2OTYxfQ.h6BPUATFRrETK-hBJlqXHyE3ywIqrem6DKq0kfYxxeo
  *    responses:
  *      200:
  *        descriptions: success - get array of blogs
  *
  */
-router.get("/add", AdminBlogController.getListOfBlogs);
+router.get("/", AdminBlogController.getListOfBlogs);
 
 /**
  * @swagger
@@ -26,6 +33,12 @@ router.get("/add", AdminBlogController.getListOfBlogs);
  *    consumes:
  *      - multioart/form-data
  *    parameters:
+ *      - in: header
+ *        example : Bearer Token...
+ *        name: access-token
+ *        required: true
+ *        type: string
+ *        value : Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtb2JpbGUiOiIwOTM4ODM2NjUxMCIsImlhdCI6MTY5Njc4MjE2MSwiZXhwIjoxNjk3Mzg2OTYxfQ.h6BPUATFRrETK-hBJlqXHyE3ywIqrem6DKq0kfYxxeo
  *      - in: formData
  *        name: title
  *        required: true

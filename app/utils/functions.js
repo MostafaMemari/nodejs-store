@@ -15,7 +15,7 @@ function signAccessToken(userID) {
     const payload = {
       mobile: user.mobile,
     };
-    const options = { expiresIn: "1h" };
+    const options = { expiresIn: "1w" };
     JWT.sign(payload, ACCESS_TOKEN_SECRET_KEY, options, (err, token) => {
       if (err) reject(createHttpError.InternalServerError("خطای سروری"));
       resolve(token);
