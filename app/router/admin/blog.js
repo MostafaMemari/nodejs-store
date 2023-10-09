@@ -71,6 +71,54 @@ router.get("/", AdminBlogController.getListOfBlogs);
  */
 router.post("/add", uploadFile.single("image"), stringToArray("tags"), AdminBlogController.createBlog);
 
+/**
+ * @swagger
+ * /admin/blogs/{id}:
+ *  get:
+ *    summary: get blog By id and populate this field
+ *    tags: [Blog(AdminPanel)]
+ *    parameters:
+ *      - in: header
+ *        example : Bearer Token...
+ *        name: access-token
+ *        required: true
+ *        type: string
+ *        value : Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtb2JpbGUiOiIwOTM4ODM2NjUxMCIsImlhdCI6MTY5Njc4MjE2MSwiZXhwIjoxNjk3Mzg2OTYxfQ.h6BPUATFRrETK-hBJlqXHyE3ywIqrem6DKq0kfYxxeo
+ *      - in: path
+ *        name: id
+ *        type: string
+ *        required: true
+
+ *    responses:
+ *      200:
+ *        descriptions: success
+ */
+router.get("/:id", AdminBlogController.getOneBlogById);
+
+/**
+ * @swagger
+ * /admin/blogs/{id}:
+ *  delete:
+ *    summary: remove blog by ID
+ *    tags: [Blog(AdminPanel)]
+ *    parameters:
+ *      - in: header
+ *        example : Bearer Token...
+ *        name: access-token
+ *        required: true
+ *        type: string
+ *        value : Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtb2JpbGUiOiIwOTM4ODM2NjUxMCIsImlhdCI6MTY5Njc4MjE2MSwiZXhwIjoxNjk3Mzg2OTYxfQ.h6BPUATFRrETK-hBJlqXHyE3ywIqrem6DKq0kfYxxeo
+ *      - in: path
+ *        name: id
+ *        type: string
+ *        required: true
+
+ *    responses:
+ *      200:
+ *        descriptions: success
+ */
+router.delete("/:id", AdminBlogController.deleteBlogById);
+
 module.exports = {
   BlogAdminApiRoutes: router,
 };
