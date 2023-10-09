@@ -119,6 +119,51 @@ router.get("/:id", AdminBlogController.getOneBlogById);
  */
 router.delete("/:id", AdminBlogController.deleteBlogById);
 
+/**
+ * @swagger
+ * /admin/blogs/update/{id}:
+ *  patch:
+ *    summary: update Blog document By Id
+ *    tags: [Blog(AdminPanel)]
+ *    consumes:
+ *      - multioart/form-data
+ *    parameters:
+ *      - in: header
+ *        example : Bearer Token...
+ *        name: access-token
+ *        required: true
+ *        type: string
+ *        value : Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtb2JpbGUiOiIwOTM4ODM2NjUxMCIsImlhdCI6MTY5Njc4MjE2MSwiZXhwIjoxNjk3Mzg2OTYxfQ.h6BPUATFRrETK-hBJlqXHyE3ywIqrem6DKq0kfYxxeo
+ *      - in: path
+ *        name: id
+ *        type: string
+ *        required: true
+ *      - in: formData
+ *        name: title
+ *        type: string
+ *      - in: formData
+ *        name: text
+ *        type: string
+ *      - in: formData
+ *        name: short_text
+ *        type: string
+ *      - in: formData
+ *        name: tags
+ *        example: tag1#tag2#tag3_foo
+ *        type: string
+ *      - in: formData
+ *        name: category
+ *        type: string
+ *      - in: formData
+ *        name: image
+ *        type: file
+
+ *    responses:
+ *      200:
+ *        descriptions: success
+ */
+router.patch("/update/:id", uploadFile.single("image"), stringToArray("tags"), AdminBlogController.updateBlogById);
+
 module.exports = {
   BlogAdminApiRoutes: router,
 };

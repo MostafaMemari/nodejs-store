@@ -113,7 +113,38 @@ class BlogController extends Controller {
   }
   async updateBlogById(req, res, next) {
     try {
+      const { id } = req.params;
+      console.log(id);
+      await this.findBlog(id);
+      if (req?.body?.fileUploadPath && req?.body?.filename) {
+        req.body.image = path.join(req.body.fileUploadPath, req.body.filename);
+        req.body.image = req.body.image.replace(/\\/g, "/");
+      }
+      const data = req.body;
+
+      let nullishData = ["", " ", "0", 0, null, undefined];
+      let blackListFields = ["comments", "likes", "deslikes", "bookmarks", "author"];
+
+      Object.keys(data).forEach((key) => {
+        if (blackListFields.includes(data[key])) delete data[key];
+        if (typeof data[key] == "string") data[key] = data[key].trim();
+        if (Array.isArray(data[key]) && Array.length > 0) data[key] = data[key].map((item) => item.trim());
+        if (nullishData.includes(data[key])) delete data[key];
+      });
+      const updateResult = await BlogModel.findByIdAndUpdate({ _id: id }, { $set: data });
+
+      deleteFileInPublic(updateResult.image);
+
+      if (updateResult.modifiedCount == 0) throw createHttpError.InternalServerError("به روزرسانی انجام نشد");
+
+      return res.status(200).json({
+        data: {
+          statusCode: 200,
+          message: "بلاگ با موفقیت ویرایش شد",
+        },
+      });
     } catch (error) {
+      deleteFileInPublic(req?.body?.image);
       next(error);
     }
   }
