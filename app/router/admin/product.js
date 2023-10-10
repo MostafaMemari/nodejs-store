@@ -44,9 +44,11 @@ const router = require("express").Router();
  *          discount:
  *            type: string
  *            description: the discount of products
- *          image:
- *            type: file
- *            description: the image of products
+ *          images:
+ *            type: array
+ *            items:
+ *              type: string
+ *              format: binary
  *          height:
  *            type: string
  *            description: the height of products
@@ -79,7 +81,7 @@ const router = require("express").Router();
  *
  */
 
-router.post("/add", uploadFile.single("image"), stringToArray("tags"), ProductController.addProduct);
+router.post("/add", uploadFile.array("images", 10), stringToArray("tags"), ProductController.addProduct);
 
 /**
  * @swagger

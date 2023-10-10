@@ -1,11 +1,13 @@
 const { ProductModel } = require("../../../models/products");
-const { deleteFileInPublic } = require("../../../utils/functions");
+const { deleteFileInPublic, listofImagesFormRequest } = require("../../../utils/functions");
 const { createProductSchema } = require("../../validators/admin/product.schema");
 const Controller = require("../controller");
 const path = require("path");
 class ProductController extends Controller {
   async addProduct(req, res, next) {
     try {
+      const images = listofImagesFormRequest(req?.files || [], req.body.fileUploadPath);
+      console.log(images);
       const productBody = await createProductSchema.validateAsync(req.body);
       let image = path.join(productBody.fileUploadPath, productBody.filename);
       image = image.replace(/\\/g, "/");
@@ -35,7 +37,7 @@ class ProductController extends Controller {
         price,
         count,
         discount,
-        image,
+        images,
         supplier,
         feture,
         type,
