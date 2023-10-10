@@ -11,9 +11,9 @@ class BlogController extends Controller {
       const blogDataBody = await createBlogSchema.validateAsync(req.body);
       req.body.image = path.join(blogDataBody.fileUploadPath, blogDataBody.filename);
       req.body.image = req.body.image.replace(/\\/g, "/");
+      const { title, text, short_text, category, tags } = req.body;
       const image = req.body.image;
       const author = req.user._id;
-      const { title, text, short_text, category, tags } = req.body;
       await BlogModel.create({ title, text, short_text, category, tags, image, author });
       return res.status(201).json({
         data: {
