@@ -148,3 +148,13 @@ router.patch("/update/:id", CategoryController.editCategoryTitle);
 module.exports = {
   CategoryRoutes: router,
 };
+
+// *    requestBody:
+// *      required: true
+// *      content:
+// *        application/x-www-form-urlencoded:
+// *          schema:
+// *            $ref: "#/components/schemas/Category"
+// *        application/json:
+// *          schema:
+// *            $ref: "#/components/schemas/Category"

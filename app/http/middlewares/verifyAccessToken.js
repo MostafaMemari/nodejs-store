@@ -12,7 +12,6 @@ function getToken(headers) {
 function verifyAccessToken(req, res, next) {
   try {
     const token = getToken(req.headers);
-    console.log(req.headers);
     JWT.verify(token, ACCESS_TOKEN_SECRET_KEY, async (error, payload) => {
       try {
         if (error) throw createHttpError.Unauthorized("وارد حساب کاربری خود شوید");

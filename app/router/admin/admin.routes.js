@@ -17,7 +17,7 @@ const router = require("express").Router();
  */
 
 router.use("/category", CategoryRoutes);
-router.use("/blogs", verifyAccessToken, BlogAdminApiRoutes);
+router.use("/blogs", BlogAdminApiRoutes);
 
 module.exports = {
   AdminRoutes: router,
