@@ -17,7 +17,6 @@ const router = require("express").Router();
  *        parent:
  *          type: string
  *          description: the title of category
- *
  */
 
 /**
@@ -26,13 +25,6 @@ const router = require("express").Router();
  *  post:
  *    tags: [Caregory(AdminPanel)]
  *    summery: add category
- *    parameters:
- *      - in: header
- *        example : Bearer Token...
- *        name: access-token
- *        required: true
- *        type: string
- *        value : Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtb2JpbGUiOiIwOTM4ODM2NjUxMCIsImlhdCI6MTY5Njc4MjE2MSwiZXhwIjoxNjk3Mzg2OTYxfQ.h6BPUATFRrETK-hBJlqXHyE3ywIqrem6DKq0kfYxxeo
  *    requestBody:
  *      required: true
  *      content:
@@ -54,13 +46,6 @@ router.post("/add", CategoryController.addCategory);
  *  get:
  *    tags: [Caregory(AdminPanel)]
  *    summery: get All parent of category or category Heads
- *    parameters:
- *      - in: header
- *        example : Bearer Token...
- *        name: access-token
- *        required: true
- *        type: string
- *        value : Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtb2JpbGUiOiIwOTM4ODM2NjUxMCIsImlhdCI6MTY5Njc4MjE2MSwiZXhwIjoxNjk3Mzg2OTYxfQ.h6BPUATFRrETK-hBJlqXHyE3ywIqrem6DKq0kfYxxeo
  *    responses:
  *      200:
  *        description: success
@@ -73,12 +58,6 @@ router.get("/parents", CategoryController.getAllParents);
  *    tags: [Caregory(AdminPanel)]
  *    summery: get All parent of category or category Heads
  *    parameters:
- *      - in: header
- *        example : Bearer Token...
- *        name: access-token
- *        required: true
- *        type: string
- *        value : Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtb2JpbGUiOiIwOTM4ODM2NjUxMCIsImlhdCI6MTY5Njc4MjE2MSwiZXhwIjoxNjk3Mzg2OTYxfQ.h6BPUATFRrETK-hBJlqXHyE3ywIqrem6DKq0kfYxxeo
  *      - in: path
  *        name: parent
  *        type: string
@@ -94,13 +73,6 @@ router.get("/chidren/:parent", CategoryController.getChildofParents);
  *  get:
  *    tags: [Caregory(AdminPanel)]
  *    summery: get All categories
- *    parameters:
- *      - in: header
- *        example : Bearer Token...
- *        name: access-token
- *        required: true
- *        type: string
- *        value : Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtb2JpbGUiOiIwOTM4ODM2NjUxMCIsImlhdCI6MTY5Njc4MjE2MSwiZXhwIjoxNjk3Mzg2OTYxfQ.h6BPUATFRrETK-hBJlqXHyE3ywIqrem6DKq0kfYxxeo
  *    responses:
  *      200:
  *        description: success
@@ -113,12 +85,6 @@ router.get("/all", CategoryController.getAllCategory);
  *    tags: [Caregory(AdminPanel)]
  *    summery: remove category with object-id
  *    parameters:
- *      - in: header
- *        example : Bearer Token...
- *        name: access-token
- *        required: true
- *        type: string
- *        value : Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtb2JpbGUiOiIwOTM4ODM2NjUxMCIsImlhdCI6MTY5Njc4MjE2MSwiZXhwIjoxNjk3Mzg2OTYxfQ.h6BPUATFRrETK-hBJlqXHyE3ywIqrem6DKq0kfYxxeo
  *      - in: path
  *        name: id
  *        type: string
@@ -133,12 +99,6 @@ router.delete("/remove/:id", CategoryController.removeCategory);
  * /admin/category/list-of-all:
  *  get:
  *    parameters:
- *      - in: header
- *        example : Bearer Token...
- *        name: access-token
- *        required: true
- *        type: string
- *        value : Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtb2JpbGUiOiIwOTM4ODM2NjUxMCIsImlhdCI6MTY5Njc4MjE2MSwiZXhwIjoxNjk3Mzg2OTYxfQ.h6BPUATFRrETK-hBJlqXHyE3ywIqrem6DKq0kfYxxeo
  *    tags: [Caregory(AdminPanel)]
  *    summery: get All categories without populate and nested structure
  *    responses:
@@ -153,12 +113,6 @@ router.get("/list-of-all", CategoryController.getAllCategoryWidthOutPopulate);
  *    tags: [Caregory(AdminPanel)]
  *    summery: find category bu object-id
  *    parameters:
- *      - in: header
- *        example : Bearer Token...
- *        name: access-token
- *        required: true
- *        type: string
- *        value : Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtb2JpbGUiOiIwOTM4ODM2NjUxMCIsImlhdCI6MTY5Njc4MjE2MSwiZXhwIjoxNjk3Mzg2OTYxfQ.h6BPUATFRrETK-hBJlqXHyE3ywIqrem6DKq0kfYxxeo
  *      - in: path
  *        name: id
  *        type: string
@@ -175,12 +129,6 @@ router.get("/:id", CategoryController.getCategoryByID);
  *    tags: [Caregory(AdminPanel)]
  *    summery: edit or update category title with object id
  *    parameters:
- *      - in: header
- *        example : Bearer Token...
- *        name: access-token
- *        required: true
- *        type: string
- *        value : Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtb2JpbGUiOiIwOTM4ODM2NjUxMCIsImlhdCI6MTY5Njc4MjE2MSwiZXhwIjoxNjk3Mzg2OTYxfQ.h6BPUATFRrETK-hBJlqXHyE3ywIqrem6DKq0kfYxxeo
  *      - in: path
  *        name: id
  *        type: string

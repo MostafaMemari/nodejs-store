@@ -4,7 +4,7 @@ const JWT = require("jsonwebtoken");
 const { ACCESS_TOKEN_SECRET_KEY } = require("../../utils/constans");
 
 function getToken(headers) {
-  const [bearer, token] = headers?.["access-token"]?.split(" ") || [];
+  const [bearer, token] = headers?.authorization?.split(" ") || [];
   if (token && ["Bearer", "bearer"].includes(bearer)) return token;
   throw createHttpError.Unauthorized("حساب کاربری جهت ورود شناسایی نشد وارد حساب کاربری خود شوید");
 }
@@ -12,6 +12,7 @@ function getToken(headers) {
 function verifyAccessToken(req, res, next) {
   try {
     const token = getToken(req.headers);
+    console.log(req.headers);
     JWT.verify(token, ACCESS_TOKEN_SECRET_KEY, async (error, payload) => {
       try {
         if (error) throw createHttpError.Unauthorized("وارد حساب کاربری خود شوید");
