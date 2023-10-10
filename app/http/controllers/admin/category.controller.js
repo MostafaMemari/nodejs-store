@@ -9,7 +9,9 @@ class CategoryController extends Controller {
     try {
       await addCategorySchema.validateAsync(req.body);
       const { title, parent } = req.body;
-      const category = await CategoryModel.create({ title, parent });
+      let category;
+      if (title && parent) category = await CategoryModel.create({ title, parent });
+      else category = await CategoryModel.create({ title });
       if (!category) throw createHttpError.InternalServerError("خطای داخلی");
       return res.status(201).json({
         data: {
