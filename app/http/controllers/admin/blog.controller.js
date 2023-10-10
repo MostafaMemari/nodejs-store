@@ -26,7 +26,6 @@ class BlogController extends Controller {
       next(error);
     }
   }
-
   async getOneBlogById(req, res, next) {
     try {
       const { id } = req.params;
