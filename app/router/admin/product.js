@@ -142,6 +142,24 @@ router.get("/all", ProductController.getAllProduct);
  */
 router.get("/:id", ProductController.getOneProduct);
 
+/**
+ * @swagger
+ * /admin/products/remove/{id}:
+ *  delete:
+ *    tags : [Product(AdminPanel)]
+ *    summary: delete One product By ID
+ *    parameters:
+ *      - in: path
+ *        name: id
+ *        type: string
+ *        description: ObjectId of Product
+ *    responses:
+ *      200:
+ *        description: success
+ *
+ */
+router.delete("/remove/:id", ProductController.removeProductById);
+
 module.exports = {
   AdminApiProductRouter: router,
 };

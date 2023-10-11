@@ -51,12 +51,6 @@ class ProductController extends Controller {
       next(error);
     }
   }
-  async removeProduct(req, res, next) {
-    try {
-    } catch (error) {
-      next(error);
-    }
-  }
   async getAllProduct(req, res, next) {
     try {
       const products = await ProductModel.find({});
@@ -75,6 +69,20 @@ class ProductController extends Controller {
       return res.status(200).json({
         statusCode: 200,
         product,
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
+  async removeProductById(req, res, next) {
+    try {
+      const { id } = req.params;
+      const product = await this.findProductById(id);
+      const removeProductResult = await ProductModel.deleteOne({ _id: product._id });
+      if (removeProductResult.deletedCount == 0) throw createHttpError.InternalServerError("حذف محصول با خطا مواجه شد");
+      return res.status(200).json({
+        statusCode: 200,
+        message: "حذف محصول با موفقیت انجام شد",
       });
     } catch (error) {
       next(error);
