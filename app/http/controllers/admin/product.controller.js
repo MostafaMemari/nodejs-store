@@ -4,6 +4,7 @@ const { deleteFileInPublic, listofImagesFormRequest } = require("../../../utils/
 const { createProductSchema } = require("../../validators/admin/product.schema");
 const { objectIdValidator } = require("../../validators/public.validator");
 const Controller = require("../controller");
+const { StatusCodes: HttpStatus } = require("http-status-codes");
 const path = require("path");
 class ProductController extends Controller {
   async addProduct(req, res, next) {
@@ -36,8 +37,8 @@ class ProductController extends Controller {
         feture,
         type,
       });
-      return res.status(201).json({
-        statusCode: 201,
+      return res.status(HttpStatus.CREATED).json({
+        statusCode: HttpStatus.CREATED,
         message: "ثبت محصول با موفقیت ایجاد شد",
       });
     } catch (error) {
@@ -53,9 +54,19 @@ class ProductController extends Controller {
   }
   async getAllProduct(req, res, next) {
     try {
-      const products = await ProductModel.find({});
-      return res.status(200).json({
-        statusCode: 200,
+      const search = req?.query?.search || "";
+      let products = null;
+      if (search) {
+        products = await ProductModel.find({
+          $text: {
+            $search: search,
+          },
+        });
+      } else {
+        products = await ProductModel.find({});
+      }
+      return res.status(HttpStatus.OK).json({
+        statusCode: HttpStatus.OK,
         products,
       });
     } catch (error) {
@@ -66,8 +77,8 @@ class ProductController extends Controller {
     try {
       const { id } = req.params;
       const product = await this.findProductById(id);
-      return res.status(200).json({
-        statusCode: 200,
+      return res.status(HttpStatus.OK).json({
+        statusCode: HttpStatus.OK,
         product,
       });
     } catch (error) {
@@ -80,8 +91,8 @@ class ProductController extends Controller {
       const product = await this.findProductById(id);
       const removeProductResult = await ProductModel.deleteOne({ _id: product._id });
       if (removeProductResult.deletedCount == 0) throw createHttpError.InternalServerError("حذف محصول با خطا مواجه شد");
-      return res.status(200).json({
-        statusCode: 200,
+      return res.status(HttpStatus.OK).json({
+        statusCode: HttpStatus.OK,
         message: "حذف محصول با موفقیت انجام شد",
       });
     } catch (error) {

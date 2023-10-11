@@ -117,6 +117,11 @@ router.post("/add", uploadFile.array("images", 10), stringToArray("tags"), strin
  *  get:
  *    tags : [Product(AdminPanel)]
  *    summary: get all products
+ *    parameters:
+ *      - in: query
+ *        name: search
+ *        type: string
+ *        description: text for search in title , text , short_text (product)
  *    responses:
  *      201:
  *        description: created new product
