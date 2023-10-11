@@ -195,7 +195,7 @@ router.post("/add", uploadFile.array("images", 10), stringToArray("tags"), strin
  *        description: updated product successfully
  *
  */
-router.patch("/products/edit/:id", uploadFile.array("images", 10), stringToArray("tags", "colors"), ProductController.editProduct);
+router.patch("/edit/:id", uploadFile.array("images", 10), stringToArray("tags", "colors"), ProductController.editProduct);
 
 /**
  * @swagger

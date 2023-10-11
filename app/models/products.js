@@ -18,7 +18,7 @@ const ProductSchema = new mongoose.Schema({
   type: { type: String, required: true }, // virtual , physici
   format: { type: String },
   supplier: { type: mongoose.Types.ObjectId, required: true },
-  feture: {
+  features: {
     type: Object,
     default: {
       length: "",

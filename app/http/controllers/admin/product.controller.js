@@ -1,11 +1,30 @@
 const createHttpError = require("http-errors");
 const { ProductModel } = require("../../../models/products");
-const { deleteFileInPublic, listofImagesFormRequest } = require("../../../utils/functions");
+const {
+  deleteFileInPublic,
+  listofImagesFormRequest,
+  copyObject,
+  setFeatures,
+  deleteInvalidPropertyInObject,
+} = require("../../../utils/functions");
 const { createProductSchema } = require("../../validators/admin/product.schema");
 const { objectIdValidator } = require("../../validators/public.validator");
 const Controller = require("../controller");
 const { StatusCodes: HttpStatus } = require("http-status-codes");
 const path = require("path");
+const ProductBlackList = {
+  BOOKMARKS: "bookmarks",
+  LIKES: "likes",
+  DISLIKES: "dislikes",
+  COMMENTS: "comments",
+  SUPPLIER: "supplier",
+  WEIGHT: "weight",
+  WIDTH: "width",
+  LENGTH: "length",
+  HEIGHT: "height",
+  COLORS: "colors",
+};
+Object.freeze(ProductBlackList);
 class ProductController extends Controller {
   async addProduct(req, res, next) {
     try {
@@ -14,15 +33,19 @@ class ProductController extends Controller {
       let image = path.join(productBody.fileUploadPath, productBody.filename);
       image = image.replace(/\\/g, "/");
 
-      const { title, short_text, text, tags, category, price, count, discount, height, weight, width, length, colors, type } = req.body;
+      const { title, short_text, text, tags, category, price, count, discount, type } = req.body;
       const supplier = req.user._id;
-      let feture = {
-        width,
-        height,
-        weight,
-        length,
-        colors,
-      };
+
+      // let features = {
+      //   width,
+      //   height,
+      //   weight,
+      //   length,
+      //   colors,
+      // };
+
+      const features = setFeatures(req.body);
+
       const product = await ProductModel.create({
         title,
         short_text,
@@ -34,7 +57,7 @@ class ProductController extends Controller {
         discount,
         images,
         supplier,
-        feture,
+        features,
         type,
       });
       return res.status(HttpStatus.CREATED).json({
@@ -48,6 +71,21 @@ class ProductController extends Controller {
   }
   async editProduct(req, res, next) {
     try {
+      const { id } = req.params;
+      const product = await this.findProductById(id);
+      let blackListFields = Object.values[ProductBlackList];
+
+      const data = copyObject(req.body);
+      data.images = listofImagesFormRequest(req?.files || [], req.body.fileUploadPath);
+      data.features = setFeatures(req.body);
+      deleteInvalidPropertyInObject(data, blackListFields);
+      const updateProductResult = await ProductModel.updateOne({ _id: product._id }, { $set: data });
+      if (updateProductResult.modifiedCount == 0) throw { status: HttpStatus.INTERNAL_SERVER_ERROR, message: "خطای داخلی" };
+      return res.status(HttpStatus.OK).json({
+        statusCode: HttpStatus.OK,
+        message: "به روز رسانی با موفقیت انجام شد",
+        data,
+      });
     } catch (error) {
       next(error);
     }

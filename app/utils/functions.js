@@ -62,6 +62,35 @@ function listofImagesFormRequest(files, fileUploadPath) {
     return [];
   }
 }
+function copyObject(object) {
+  return JSON.parse(JSON.stringify(object));
+}
+function setFeatures(body) {
+  const { colors, width, weight, height, length } = body;
+  let features = {};
+  features.colors = colors;
+  if (!isNaN(width) || !isNaN(weight) || !isNaN(height) || !isNaN(length)) {
+    if (!width) features.width = 0;
+    else features.width = +width;
+    if (!weight) features.weight = 0;
+    else features.weight = +weight;
+    if (!height) features.height = 0;
+    else features.height = +height;
+    if (!length) features.length = 0;
+    else features.length = +length;
+  }
+  return features;
+}
+function deleteInvalidPropertyInObject(data = {}, blackListFields = []) {
+  let nullishData = ["", " ", "0", 0, null, undefined];
+  Object.keys(data).forEach((key) => {
+    if (blackListFields.includes(data[key])) delete data[key];
+    if (typeof data[key] == "string") data[key] = data[key].trim();
+    if (Array.isArray(data[key]) && data[key].length > 0) data[key] = data[key].map((item) => item.trim());
+    if (Array.isArray(data[key]) && data[key].length == 0) delete data[key];
+    if (nullishData.includes(data[key])) delete data[key];
+  });
+}
 module.exports = {
   randomNumberGenerator,
   signAccessToken,
@@ -69,4 +98,7 @@ module.exports = {
   verifyRefreshToken,
   deleteFileInPublic,
   listofImagesFormRequest,
+  copyObject,
+  setFeatures,
+  deleteInvalidPropertyInObject,
 };
