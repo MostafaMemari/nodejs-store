@@ -8,6 +8,25 @@ const router = require("express").Router();
  * @swagger
  *  components:
  *    schemas:
+ *      Color:
+ *        type: array
+ *        items:
+ *          type: string
+ *          enum:
+ *            - black
+ *            - white
+ *            - gray
+ *            - red
+ *            - blue
+ *            - green
+ *            - orange
+ *            - purple
+ */
+
+/**
+ * @swagger
+ *  components:
+ *    schemas:
  *      Products:
  *        type: object
  *        required:
@@ -52,15 +71,25 @@ const router = require("express").Router();
  *          height:
  *            type: string
  *            description: the height of products
+ *            example: 0
  *          weight:
  *            type: string
  *            description: the weight of products
+ *            example: 0
  *          width:
  *            type: string
  *            description: the with of products
+ *            example: 0
  *          length:
  *            type: string
  *            description: the length of products
+ *            example: 0
+ *          type:
+ *            type: string
+ *            description: the type of product
+ *            example: virtual - physical
+ *          colors:
+ *            $ref: '#/components/schemas/Color'
  */
 
 /**
@@ -80,8 +109,7 @@ const router = require("express").Router();
  *        description: created new product
  *
  */
-
-router.post("/add", uploadFile.array("images", 10), stringToArray("tags"), ProductController.addProduct);
+router.post("/add", uploadFile.array("images", 10), stringToArray("tags"), stringToArray("colors"), ProductController.addProduct);
 
 /**
  * @swagger
@@ -95,10 +123,24 @@ router.post("/add", uploadFile.array("images", 10), stringToArray("tags"), Produ
  *
  */
 router.get("/all", ProductController.getAllProduct);
-// router.patch();
-// router.delete();
-// router.get();
-// router.get();
+
+/**
+ * @swagger
+ * /admin/products/{id}:
+ *  get:
+ *    tags : [Product(AdminPanel)]
+ *    summary: get One product By ID
+ *    parameters:
+ *      - in: path
+ *        name: id
+ *        type: string
+ *        description: ObjectId of Product
+ *    responses:
+ *      200:
+ *        description: success
+ *
+ */
+router.get("/:id", ProductController.getOneProduct);
 
 module.exports = {
   AdminApiProductRouter: router,

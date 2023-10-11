@@ -39,7 +39,6 @@ const router = require("express").Router();
  *        description: success
  */
 router.post("/add", CategoryController.addCategory);
-
 /**
  * @swagger
  * /admin/category/parents:
