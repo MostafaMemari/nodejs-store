@@ -32,6 +32,7 @@ const CourseSchema = new mongoose.Schema({
   teacher: { type: mongoose.Types.ObjectId, ref: "user", required: true },
   chapters: { type: [ChapterSchema], default: [] },
   students: { type: [mongoose.Types.ObjectId], ref: "user", default: [] },
+  status: { type: String, default: "notStarted" /* notStarted , Completed , Holding */ },
 });
 
 CourseSchema.index({ title: "text", short_text: "text", text: "text" });
