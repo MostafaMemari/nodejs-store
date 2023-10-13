@@ -5,7 +5,7 @@ const path = require("path");
 const { createCourseSchema } = require("../../validators/admin/course.schema");
 const createHttpError = require("http-errors");
 class CourseController extends Controller {
-  async getListOfProduct(req, res, next) {
+  async getListOfCourse(req, res, next) {
     const { search } = req.query;
     let courses = null;
     if (search)
@@ -33,6 +33,9 @@ class CourseController extends Controller {
       const teacher = req.user._id;
 
       const { title, short_text, text, tags, category, price, discount, type } = req.body;
+
+      if (Number(price) > 0 && type === "free") throw createHttpError.BadRequest("برای دوره رایگان نمیتوان قیمت ثبت کرد");
+
       const course = await CoursesModel.create({
         title,
         short_text,
@@ -51,6 +54,19 @@ class CourseController extends Controller {
       return res.status(StatusCodes.CREATED).json({
         statusCode: StatusCodes.CREATED,
         message: "دوره با موفقیت ایجاد شد",
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
+  async getCourseById(req, res, next) {
+    try {
+      const { id } = req.params;
+      const course = await CoursesModel.findById(id);
+      if (!course) throw createHttpError.NotFound("دوره ای یافت نشد");
+      return res.status(StatusCodes.OK).json({
+        statusCode: StatusCodes.OK,
+        course,
       });
     } catch (error) {
       next(error);

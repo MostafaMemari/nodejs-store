@@ -85,7 +85,7 @@ const router = require("express").Router();
  *        200:
  *          description: success
  */
-router.get("/list", CourseController.getListOfProduct);
+router.get("/list", CourseController.getListOfCourse);
 
 /**
  * @swagger
@@ -105,6 +105,24 @@ router.get("/list", CourseController.getListOfProduct);
  *
  */
 router.post("/add", uploadFile.single("image"), stringToArray("tags"), CourseController.addCourse);
+
+/**
+ * @swagger
+ * /admin/courses/{id}:
+ *  get:
+ *    tags : [Course(AdminPanel)]
+ *    summary: get One course By ID
+ *    parameters:
+ *      - in: path
+ *        name: id
+ *        type: string
+ *        description: ObjectId of Course
+ *    responses:
+ *      200:
+ *        description: success
+ *
+ */
+router.get("/:id", CourseController.getCourseById);
 
 module.exports = {
   AdminApiCourseRouter: router,
