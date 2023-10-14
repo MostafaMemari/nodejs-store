@@ -3,6 +3,7 @@ const { ChapterController } = require("../../http/controllers/admin/course/chapt
 const router = require("express").Router();
 
 router.put("/add", ChapterController.addCahpter);
+router.get("/list/:courseID", ChapterController.chaptersOfCourse);
 
 module.exports = {
   AdminApiChapterRouter: router,
