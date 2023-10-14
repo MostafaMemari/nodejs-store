@@ -1,8 +1,8 @@
 const createHttpError = require("http-errors");
-const { BlogModel } = require("../../../models/blogs");
-const { deleteFileInPublic } = require("../../../utils/functions");
-const { createBlogSchema } = require("../../validators/admin/blog.schema");
-const Controller = require("../controller");
+const { BlogModel } = require("../../../../models/blogs");
+const { deleteFileInPublic } = require("../../../../utils/functions");
+const { createBlogSchema } = require("../../../validators/admin/blog.schema");
+const Controller = require("../../controller");
 const path = require("path");
 const { StatusCodes: HttpStatus } = require("http-status-codes");
 

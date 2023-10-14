@@ -58,42 +58,11 @@
  *                  type: string
  *                  example: MostafaMemari
  */
-/**
- * @swagger
- *  definitions:
- *    publicDefinition:
- *      type: object
- *      properties:
- *        statusCode:
- *          type: integer
- *          example: 200
- *        data:
- *          type: object
- *          properties:
- *            message:
- *              type: string
- *              example: "the best message for that action"
- */
 
 /**
  * @swagger
  *  components:
  *    schemas:
- *      AddChapter:
- *        type: object
- *        required:
- *          - id
- *          - title
- *        properties:
- *          id:
- *            type: string
- *            example: 6529526761c17280b9f6cc3d
- *          title:
- *            type: string
- *            example: chapter zero - hero javascript
- *          text:
- *            type: string
- *            example: the chapterrrr
  *      Insert-Course:
  *        type: object
  *        required:
@@ -200,31 +169,6 @@
  *        description: success
  *        content:
  *          application/json:
- *            schema:
- *              $ref: "#/definitions/publicDefinition"
- *
- *
- */
-/**
- * @swagger
- * /admin/courses/add-chapter:
- *  put:
- *    tags: [Course(AdminPanel)]
- *    summary: create new Chapter for courses
- *    requestBody:
- *      required: true
- *      content:
- *        application/json:
- *          schema:
- *            $ref: '#/components/schemas/AddChapter'
- *        application/x-www-form-urlencoded:
- *          schema:
- *            $ref: '#/components/schemas/AddChapter'
- *    responses:
- *      200:
- *        description: success
- *        content:
- *          application/josn:
  *            schema:
  *              $ref: "#/definitions/publicDefinition"
  *
