@@ -14,47 +14,87 @@
  * @swagger
  * definitions:
  *  ListOfCourses:
- *    type: array
- *    items:
+ *    type: object
+ *    properties:
+ *      statusCode:
+ *        type: integer
+ *        example: 200
+ *      data:
+ *        type: object
+ *        properties:
+ *          courses:
+ *            type: array
+ *            items:
+ *              type: object
+ *              properties:
+ *                _id:
+ *                  type: string
+ *                  example: 6529526761c17280b9f6cc3d
+ *                title:
+ *                  type: string
+ *                  example: title of course
+ *                short_text:
+ *                  type: string
+ *                  example: short_text of course
+ *                text:
+ *                  type: string
+ *                  example: text of course
+ *                status:
+ *                  type: string
+ *                  example: notStarted | Completed | Holding
+ *                time:
+ *                  type: string
+ *                  example: 01:22:15
+ *                price:
+ *                  type: integer
+ *                  example: 250000
+ *                discount:
+ *                  type: integer
+ *                  example: 20
+ *                studentCount:
+ *                  type: integer
+ *                  example: 20
+ *                teacher:
+ *                  type: string
+ *                  example: MostafaMemari
+ */
+/**
+ * @swagger
+ *  definitions:
+ *    publicDefinition:
  *      type: object
  *      properties:
- *        _id:
- *          type: string
- *          example: 6529526761c17280b9f6cc3d
- *        title:
- *          type: string
- *          example: title of course
- *        short_text:
- *          type: string
- *          example: short_text of course
- *        text:
- *          type: string
- *          example: text of course
- *        status:
- *          type: string
- *          example: notStarted | Completed | Holding
- *        time:
- *          type: string
- *          example: 01:22:15
- *        price:
+ *        statusCode:
  *          type: integer
- *          example: 250000
- *        discount:
- *          type: integer
- *          example: 20
- *        studentCount:
- *          type: integer
- *          example: 20
- *        teacher:
- *          type: string
- *          example: MostafaMemari
+ *          example: 200
+ *        data:
+ *          type: object
+ *          properties:
+ *            message:
+ *              type: string
+ *              example: "the best message for that action"
  */
 
 /**
  * @swagger
  *  components:
  *    schemas:
- *      Inseert-Course:
+ *      AddChapter:
+ *        type: object
+ *        required:
+ *          - id
+ *          - title
+ *        properties:
+ *          id:
+ *            type: string
+ *            example: 6529526761c17280b9f6cc3d
+ *          title:
+ *            type: string
+ *            example: chapter zero - hero javascript
+ *          text:
+ *            type: string
+ *            example: the chapterrrr
+ *      Insert-Course:
  *        type: object
  *        required:
  *          - title
@@ -134,10 +174,14 @@
  *      content:
  *        multipart/form-data:
  *          schema:
- *            $ref: "#/components/schemas/Inseert-Course"
+ *            $ref: "#/components/schemas/Insert-Course"
  *    responses:
  *      201:
  *        description: created new course
+ *        content:
+ *          application/json:
+ *            schema:
+ *              $ref: "#/definitions/publicDefinition"
  *
  */
 /**
@@ -154,5 +198,35 @@
  *    responses:
  *      200:
  *        description: success
+ *        content:
+ *          application/json:
+ *            schema:
+ *              $ref: "#/definitions/publicDefinition"
+ *
+ *
+ */
+/**
+ * @swagger
+ * /admin/courses/add-chapter:
+ *  put:
+ *    tags: [Course(AdminPanel)]
+ *    summary: create new Chapter for courses
+ *    requestBody:
+ *      required: true
+ *      content:
+ *        application/json:
+ *          schema:
+ *            $ref: '#/components/schemas/AddChapter'
+ *        application/x-www-form-urlencoded:
+ *          schema:
+ *            $ref: '#/components/schemas/AddChapter'
+ *    responses:
+ *      200:
+ *        description: success
+ *        content:
+ *          application/josn:
+ *            schema:
+ *              $ref: "#/definitions/publicDefinition"
+ *
  *
  */

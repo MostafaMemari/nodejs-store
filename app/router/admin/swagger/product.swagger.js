@@ -161,6 +161,10 @@
  *    responses:
  *      201:
  *        description: created new product
+ *        content:
+ *          application/json:
+ *            schema:
+ *              $ref: "#/definitions/publicDefinition"
  *
  */
 /**
@@ -181,10 +185,13 @@
  *        description: id of product for update
  *        required: true
  *        type: string
-
  *    responses:
  *      201:
  *        description: updated product successfully
+ *        content:
+ *          application/json:
+ *            schema:
+ *              $ref: "#/definitions/publicDefinition"
  *
  */
 /**
@@ -201,6 +208,10 @@
  *    responses:
  *      201:
  *        description: created new product
+ *        content:
+ *          application/json:
+ *            schema:
+ *              $ref: "#/definitions/publicDefinition"
  *
  */
 /**
@@ -217,6 +228,10 @@
  *    responses:
  *      200:
  *        description: success
+ *        content:
+ *          application/json:
+ *            schema:
+ *              $ref: "#/definitions/publicDefinition"
  *
  */
 /**
@@ -233,5 +248,9 @@
  *    responses:
  *      200:
  *        description: success
+ *        content:
+ *          application/json:
+ *            schema:
+ *              $ref: "#/definitions/publicDefinition"
  *
  */
