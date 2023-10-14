@@ -16,7 +16,9 @@ class CourseController extends Controller {
 
     res.status(StatusCodes.OK).json({
       statusCode: StatusCodes.OK,
-      courses,
+      data: {
+        courses,
+      },
     });
     try {
     } catch (error) {
@@ -53,7 +55,9 @@ class CourseController extends Controller {
       if (!course?._id) throw createHttpError.InternalServerError("دوره ثبت نشد");
       return res.status(StatusCodes.CREATED).json({
         statusCode: StatusCodes.CREATED,
-        message: "دوره با موفقیت ایجاد شد",
+        data: {
+          message: "دوره با موفقیت ایجاد شد",
+        },
       });
     } catch (error) {
       next(error);
@@ -66,7 +70,9 @@ class CourseController extends Controller {
       if (!course) throw createHttpError.NotFound("دوره ای یافت نشد");
       return res.status(StatusCodes.OK).json({
         statusCode: StatusCodes.OK,
-        course,
+        data: {
+          course,
+        },
       });
     } catch (error) {
       next(error);

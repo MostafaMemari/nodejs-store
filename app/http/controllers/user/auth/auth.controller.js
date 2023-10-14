@@ -4,7 +4,7 @@ const { randomNumberGenerator, signAccessToken, verifyRefreshToken, signRefreshT
 const { UserModel } = require("../../../../models/user");
 const { ROLES } = require("../../../../utils/constans");
 const Controller = require("../../controller");
-const { StatusCodes: HttpStatus } = require("http-status-codes");
+const { StatusCodes: HttpStatus, StatusCodes } = require("http-status-codes");
 
 class UserAuthController extends Controller {
   async getOtp(req, res, next) {
@@ -15,8 +15,8 @@ class UserAuthController extends Controller {
       const result = await this.saveUser(mobile, code);
       if (!result) throw createHttpError.Unauthorized("ورود شما انجام نشد");
       return res.status(HttpStatus.OK).send({
+        statusCode: HttpStatus.OK,
         data: {
-          statusCode: HttpStatus.OK,
           message: "کد اعتبار سنجی با موفقیت برای شما ارسال شد",
           code,
           mobile,
@@ -40,6 +40,7 @@ class UserAuthController extends Controller {
       const accessToken = await signAccessToken(user._id);
       const refreshToken = await signRefreshToken(user._id);
       return res.json({
+        statusCode: StatusCodes.OK,
         data: {
           accessToken,
           refreshToken,
@@ -80,6 +81,7 @@ class UserAuthController extends Controller {
       const accessToken = await signAccessToken(user._id);
       const newRefreshToken = await signRefreshToken(user._id);
       return res.json({
+        statusCode: StatusCodes.OK,
         data: {
           accessToken,
           refreshToken: newRefreshToken,

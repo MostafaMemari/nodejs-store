@@ -1,12 +1,6 @@
 const createHttpError = require("http-errors");
 const { ProductModel } = require("../../../models/products");
-const {
-  deleteFileInPublic,
-  listofImagesFormRequest,
-  copyObject,
-  setFeatures,
-  deleteInvalidPropertyInObject,
-} = require("../../../utils/functions");
+const { deleteFileInPublic, listofImagesFormRequest, copyObject, setFeatures, deleteInvalidPropertyInObject } = require("../../../utils/functions");
 const { createProductSchema } = require("../../validators/admin/product.schema");
 const { objectIdValidator } = require("../../validators/public.validator");
 const Controller = require("../controller");
@@ -46,7 +40,7 @@ class ProductController extends Controller {
 
       const features = setFeatures(req.body);
 
-      const product = await ProductModel.create({
+      await ProductModel.create({
         title,
         short_text,
         text,
@@ -62,7 +56,9 @@ class ProductController extends Controller {
       });
       return res.status(HttpStatus.CREATED).json({
         statusCode: HttpStatus.CREATED,
-        message: "ثبت محصول با موفقیت ایجاد شد",
+        data: {
+          message: "ثبت محصول با موفقیت ایجاد شد",
+        },
       });
     } catch (error) {
       deleteFileInPublic(req.body.image);
@@ -83,8 +79,10 @@ class ProductController extends Controller {
       if (updateProductResult.modifiedCount == 0) throw { status: HttpStatus.INTERNAL_SERVER_ERROR, message: "خطای داخلی" };
       return res.status(HttpStatus.OK).json({
         statusCode: HttpStatus.OK,
-        message: "به روز رسانی با موفقیت انجام شد",
-        data,
+        data: {
+          message: "به روز رسانی با موفقیت انجام شد",
+          data,
+        },
       });
     } catch (error) {
       next(error);
@@ -105,7 +103,9 @@ class ProductController extends Controller {
       }
       return res.status(HttpStatus.OK).json({
         statusCode: HttpStatus.OK,
-        products,
+        data: {
+          products,
+        },
       });
     } catch (error) {
       next(error);
@@ -117,7 +117,9 @@ class ProductController extends Controller {
       const product = await this.findProductById(id);
       return res.status(HttpStatus.OK).json({
         statusCode: HttpStatus.OK,
-        product,
+        data: {
+          product,
+        },
       });
     } catch (error) {
       next(error);
@@ -131,7 +133,9 @@ class ProductController extends Controller {
       if (removeProductResult.deletedCount == 0) throw createHttpError.InternalServerError("حذف محصول با خطا مواجه شد");
       return res.status(HttpStatus.OK).json({
         statusCode: HttpStatus.OK,
-        message: "حذف محصول با موفقیت انجام شد",
+        data: {
+          message: "حذف محصول با موفقیت انجام شد",
+        },
       });
     } catch (error) {
       next(error);

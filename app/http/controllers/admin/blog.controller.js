@@ -17,8 +17,8 @@ class BlogController extends Controller {
       const author = req.user._id;
       await BlogModel.create({ title, text, short_text, category, tags, image, author });
       return res.status(HttpStatus.CREATED).json({
+        statusCode: HttpStatus.CREATED,
         data: {
-          statusCode: HttpStatus.CREATED,
           message: "ایجاد بلاگ با موفقیت انجام شد",
         },
       });
@@ -32,8 +32,8 @@ class BlogController extends Controller {
       const { id } = req.params;
       const blog = await this.findBlog(id);
       return res.status(HttpStatus.OK).json({
+        statusCode: HttpStatus.OK,
         data: {
-          statusCode: HttpStatus.OK,
           blog,
         },
       });
@@ -82,8 +82,8 @@ class BlogController extends Controller {
       ]);
 
       return res.status(HttpStatus.OK).json({
+        statusCode: HttpStatus.OK,
         data: {
-          statusCode: HttpStatus.OK,
           blogs,
         },
       });
@@ -105,7 +105,9 @@ class BlogController extends Controller {
       if (result.deletedCount == 0) throw createHttpError.InternalServerError("حذف انجام نشد");
       return res.status(HttpStatus.OK).json({
         statusCode: HttpStatus.OK,
-        message: "حذف مقاله با موفقیت انجام شد",
+        data: {
+          message: "حذف مقاله با موفقیت انجام شد",
+        },
       });
     } catch (error) {
       next(error);
@@ -136,8 +138,8 @@ class BlogController extends Controller {
       if (updateResult.modifiedCount == 0) throw createHttpError.InternalServerError("به روزرسانی انجام نشد");
 
       return res.status(HttpStatus.OK).json({
+        statusCode: HttpStatus.OK,
         data: {
-          statusCode: HttpStatus.OK,
           message: "بلاگ با موفقیت ویرایش شد",
         },
       });
