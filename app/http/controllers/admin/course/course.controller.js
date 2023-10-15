@@ -8,12 +8,23 @@ const mongoose = require("mongoose");
 class CourseController extends Controller {
   async getListOfCourse(req, res, next) {
     const { search } = req.query;
+
     let courses = null;
     if (search)
       courses = await CoursesModel.find({ $text: { $search: search } })
         .sort({ _id: -1 })
-        .lean();
-    else courses = await CoursesModel.find({}).sort({ _id: -1 }).lean();
+        .lean()
+        .populate([
+          { path: "category", select: { children: 0, parent: 0 } },
+          { path: "teacher", select: { first_name: 1, last_name: 1, mobile: 1, email: 1 } },
+        ]);
+    else
+      courses = await CoursesModel.find({})
+        .sort({ _id: -1 })
+        .populate([
+          { path: "category", select: { children: 0, parent: 0 } },
+          { path: "teacher", select: { first_name: 1, last_name: 1, mobile: 1, email: 1 } },
+        ]);
 
     res.status(StatusCodes.OK).json({
       statusCode: StatusCodes.OK,
