@@ -43,6 +43,15 @@
  *          text:
  *            type: string
  *            example: the chapterrrr
+ *      EditChapter:
+ *        type: object
+ *        properties:
+ *          title:
+ *            type: string
+ *            example: chapter zero - hero javascript
+ *          text:
+ *            type: string
+ *            example: the chapterrrr
  */
 
 /**
@@ -92,5 +101,58 @@
  *          application/json:
  *            schema:
  *              $ref: "#/definitions/chapterOfCourseDefinition"
+ *
+ */
+
+/**
+ * @swagger
+ * /admin/chapter/remove/{chapterID}:
+ *  patch:
+ *    tags : [Chapter(AdminPanel)]
+ *    summary: remove a Chapter of course
+ *    parameters:
+ *      - in: path
+ *        name: chapterID
+ *        type: string
+ *        required: true
+ *        description: ObjectId of Course
+ *    responses:
+ *      200:
+ *        description: success
+ *        content:
+ *          application/json:
+ *            schema:
+ *              $ref: "#/definitions/publicDefinition"
+ *
+ */
+/**
+ * @swagger
+ * /admin/chapter/update/{chapterID}:
+ *  patch:
+ *    tags : [Chapter(AdminPanel)]
+ *    summary: update a Chapter of course
+ *    parameters:
+ *      - in: path
+ *        name: chapterID
+ *        type: string
+ *        required: true
+ *        description: ObjectId of Course
+ *    requestBody:
+ *      required: true
+ *      content:
+ *        application/json:
+ *          schema:
+ *            $ref: '#/components/schemas/EditChapter'
+ *        application/x-www-form-urlencoded:
+ *          schema:
+ *            $ref: '#/components/schemas/EditChapter'
+ *
+ *    responses:
+ *      200:
+ *        description: success
+ *        content:
+ *          application/json:
+ *            schema:
+ *              $ref: "#/definitions/publicDefinition"
  *
  */
