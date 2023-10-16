@@ -75,6 +75,16 @@ class CourseController extends Controller {
       next(error);
     }
   }
+  async updateCourseById(req, res, next) {
+    try {
+      const { id } = req.params;
+      const data = req.body;
+      res.json({ id, data });
+    } catch (error) {
+      next(error);
+    }
+  }
+
   async getCourseById(req, res, next) {
     try {
       const { id } = req.params;

@@ -110,6 +110,43 @@
  *            type: string
  *            description: the type of course
  *            $ref: '#/components/schemas/Types'
+ *      Edit-Course:
+ *        type: object
+ *        properties:
+ *          title:
+ *            type: string
+ *            description: the title of course
+ *            example: عنوان دوره
+ *          short_text:
+ *            type: string
+ *            description: the short_text of course
+ *            example: متن کوتاه تست شده
+ *          text:
+ *            type: string
+ *            description: tthe text of course
+ *            example: متن توضیحات کامل دوره به صورت تستی
+ *          tags:
+ *            type: array
+ *            description: the tags of course
+ *          category:
+ *            type: string
+ *            description: the category of course
+ *            example: 6521150eeb73580ae4f6cb99
+ *          price:
+ *            type: string
+ *            description: the price of course
+ *            example: 250000
+ *          discount:
+ *            type: string
+ *            description: the discount of course
+ *            example: 250000
+ *          image:
+ *            type: string
+ *            format: binary
+ *          type:
+ *            type: string
+ *            description: the type of course
+ *            $ref: '#/components/schemas/Types'
 
  */
 
@@ -144,6 +181,32 @@
  *        multipart/form-data:
  *          schema:
  *            $ref: "#/components/schemas/Insert-Course"
+ *    responses:
+ *      201:
+ *        description: created new course
+ *        content:
+ *          application/json:
+ *            schema:
+ *              $ref: "#/definitions/publicDefinition"
+ *
+ */
+/**
+ * @swagger
+ * /admin/courses/update/{id}:
+ *  patch:
+ *    tags: [Course(AdminPanel)]
+ *    summary: edit and save course
+ *    parameters:
+ *      - in: path
+ *        name: id
+ *        type: string
+ *        required: true
+ *    requestBody:
+ *      required: true
+ *      content:
+ *        multipart/form-data:
+ *          schema:
+ *            $ref: "#/components/schemas/Edit-Course"
  *    responses:
  *      201:
  *        description: created new course
