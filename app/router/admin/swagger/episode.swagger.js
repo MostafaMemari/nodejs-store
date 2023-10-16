@@ -18,7 +18,7 @@
  *            description: type of courseID
  *          chapterID:
  *            type: string
- *            example: 652bf3f9c966411c46fa2d6c
+ *            example: 652d28126f704694311b9418
  *            description: type of chapterID
  *          title:
  *            type: string
@@ -56,6 +56,28 @@
  *    responses:
  *      201:
  *        description: created new course
+ *        content:
+ *          application/json:
+ *            schema:
+ *              $ref: "#/definitions/publicDefinition"
+ *
+ */
+
+/**
+ * @swagger
+ * /admin/episode/remove/{episodeID}:
+ *  delete:
+ *    tags : [Episode(AdminPanel)]
+ *    summary: remove a episode of course
+ *    parameters:
+ *      - in: path
+ *        name: episodeID
+ *        type: string
+ *        required: true
+ *        description: ObjectId of episode
+ *    responses:
+ *      200:
+ *        description: success
  *        content:
  *          application/json:
  *            schema:

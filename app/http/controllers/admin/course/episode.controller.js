@@ -6,6 +6,7 @@ const { getTime } = require("../../../../utils/functions");
 const { CoursesModel } = require("../../../../models/course");
 const createHttpError = require("http-errors");
 const { StatusCodes } = require("http-status-codes");
+const { objectIdValidator } = require("../../../validators/public.validator");
 
 class EpisodeController extends Controller {
   async addNewEpisode(req, res, next) {
@@ -35,6 +36,33 @@ class EpisodeController extends Controller {
         statusCode: StatusCodes.CREATED,
         data: {
           message: "افزودن اپیزود با موفقیت انجام شد",
+        },
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
+  async removeEpisode(req, res, next) {
+    try {
+      const { id: episodeID } = await objectIdValidator.validateAsync({ id: req.params.episodeID });
+
+      const removeEpisodeResult = await CoursesModel.updateOne(
+        {
+          "chapters.episodes._id": episodeID,
+        },
+        {
+          $pull: {
+            "chapters.$.episodes": {
+              _id: episodeID,
+            },
+          },
+        }
+      );
+      if (removeEpisodeResult.modifiedCount == 0) throw createHttpError.InternalServerError("حذف اپیزود انجام نشد");
+      return res.status(StatusCodes.OK).json({
+        statusCode: StatusCodes.OK,
+        data: {
+          message: "حذف اپیزود با موفقیت انجام شد",
         },
       });
     } catch (error) {
