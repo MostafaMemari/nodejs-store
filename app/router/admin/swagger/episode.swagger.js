@@ -38,6 +38,27 @@
  *            type: string
  *            description: the video of video HH
  *            format: binary
+ *      EditEpisode:
+ *        type: object
+ *        properties:
+ *          title:
+ *            type: string
+ *            example: تیتر اپیزود
+ *            description: type of title episode
+ *          text:
+ *            type: string
+ *            example: متن اپیزود
+ *            description: type of text episode
+ *          type:
+ *            type: string
+ *            description: the episode type (unlock or lock)
+ *            enum:
+ *              - lock
+ *              - unlock
+ *          video:
+ *            type: string
+ *            description: the video of video HH
+ *            format: binary
  *
  */
 
@@ -53,6 +74,34 @@
  *        multipart/form-data:
  *          schema:
  *            $ref: "#/components/schemas/AddEpisode"
+ *    responses:
+ *      201:
+ *        description: created new course
+ *        content:
+ *          application/json:
+ *            schema:
+ *              $ref: "#/definitions/publicDefinition"
+ *
+ */
+
+/**
+ * @swagger
+ * /admin/episode/edit/{episodeID}:
+ *  patch:
+ *    tags: [Episode(AdminPanel)]
+ *    summary: update episode
+ *    parameters:
+ *      - in: path
+ *        name: episodeID
+ *        type: string
+ *        required: true
+ *        description: ObjectId of episode
+ *    requestBody:
+ *      required: true
+ *      content:
+ *        multipart/form-data:
+ *          schema:
+ *            $ref: "#/components/schemas/EditEpisode"
  *    responses:
  *      201:
  *        description: created new course
