@@ -7,6 +7,7 @@ const createError = require("http-errors");
 const swaggerUI = require("swagger-ui-express");
 const swaggerJsDoc = require("swagger-jsdoc");
 const cors = require("cors");
+require("dotenv").config();
 module.exports = class Application {
   #app = express();
   #DB_URI;
@@ -60,7 +61,7 @@ module.exports = class Application {
             },
             security: [{ BearerAuth: [] }],
           },
-          apis: ["./app/router/*/*.js", "./app/router/*.js", "./app/router/admin/swagger/*.js"],
+          apis: ["./app/router/admin/swagger/*.js", "./app/router/*.js", "./app/router/*/*.js"],
         }),
         { explorer: true }
       )
