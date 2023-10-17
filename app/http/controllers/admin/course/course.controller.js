@@ -116,7 +116,6 @@ class CourseController extends Controller {
       next(error);
     }
   }
-
   async getCourseById(req, res, next) {
     try {
       const { id } = req.params;
