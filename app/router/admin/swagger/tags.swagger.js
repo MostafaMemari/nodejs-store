@@ -3,6 +3,8 @@
  *  tags:
  *   -  name: Admin-Panel
  *      description: chapter section
+ *   -  name: Users(AdminPanel)
+ *      description: managment users of webSite
  *   -  name: Course(AdminPanel)
  *      description: managment course section like manage episode , chapter and courses
  *   -  name: Chapter(AdminPanel)
