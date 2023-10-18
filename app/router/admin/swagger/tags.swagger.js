@@ -3,6 +3,8 @@
  *  tags:
  *   -  name: Admin-Panel
  *      description: chapter section
+ *   -  name: RBAC(AdminPanel)
+ *      description: Role Based Access Control
  *   -  name: Users(AdminPanel)
  *      description: managment users of webSite
  *   -  name: Course(AdminPanel)
