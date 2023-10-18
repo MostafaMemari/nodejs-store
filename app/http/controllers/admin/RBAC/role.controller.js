@@ -8,8 +8,8 @@ class RoleController extends Controller {
   async getAllRoles(req, res, next) {
     try {
       const roles = await RoleModel.find({}).populate({ path: "permission" });
-      return res.status(StatusCodes.OK).json({
-        statuseCode: StatusCodes.OK,
+      return res.status(StatusCodes.CREATED).json({
+        statuseCode: StatusCodes.CREATED,
         data: {
           roles,
         },
