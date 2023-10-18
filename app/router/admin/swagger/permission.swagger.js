@@ -18,7 +18,7 @@
  *                                  _id:
  *                                      type: string
  *                                      example: "62822e4ff68cdded54aa928d"
- *                                  title:
+ *                                  name:
  *                                      type: string
  *                                      example: "title of permission"
  *                                  description:

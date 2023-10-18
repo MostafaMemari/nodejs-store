@@ -18,7 +18,7 @@ class PermissionController extends Controller {
       next(error);
     }
   }
-  async createNewPermissions(req, res, next) {
+  async createNewPermission(req, res, next) {
     try {
       const { name, description } = await addPermissionSchema.validateAsync(req.body);
       await this.findPermissionWithName(name);
@@ -34,9 +34,29 @@ class PermissionController extends Controller {
       next(error);
     }
   }
+  async removePermission(req, res, next) {
+    try {
+      const { id } = req.params;
+      await this.findPermissionWithId(id);
+      const removePermissionResult = await PermissionsModel.deleteOne({ _id: id });
+      if (!removePermissionResult.deletedCount) throw createHttpError.InternalServerError("سطح دسترسی حذف نشد");
+      return res.status(StatusCodes.OK).json({
+        statuseCode: StatusCodes.OK,
+        data: {
+          message: "سطح دسترسی جدید با موفقیت حذف شد",
+        },
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
   async findPermissionWithName(name) {
     const permission = await PermissionsModel.findOne({ name });
     if (permission) throw createHttpError.BadRequest("سطح دسترسی مورد نظر قبلا ثبت شده است");
+  }
+  async findPermissionWithId(_id) {
+    const permission = await PermissionsModel.findOne({ _id });
+    if (!permission) throw createHttpError.NotFound("سطح دسترسی یافت نشد");
   }
 }
 
