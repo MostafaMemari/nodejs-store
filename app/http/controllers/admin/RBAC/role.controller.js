@@ -4,13 +4,14 @@ const Controller = require("../../controller");
 const createHttpError = require("http-errors");
 const { addRoleSchema } = require("../../../validators/admin/RBAC.schema");
 const { default: mongoose } = require("mongoose");
+const { copyObject, deleteInvalidPropertyInObject } = require("../../../../utils/functions");
 
 class RoleController extends Controller {
   async getAllRoles(req, res, next) {
     try {
-      const roles = await RoleModel.find({}).populate({ path: "permission" });
-      return res.status(StatusCodes.CREATED).json({
-        statuseCode: StatusCodes.CREATED,
+      const roles = await RoleModel.find({});
+      return res.status(StatusCodes.OK).json({
+        statuseCode: StatusCodes.OK,
         data: {
           roles,
         },
@@ -21,9 +22,9 @@ class RoleController extends Controller {
   }
   async createNewRole(req, res, next) {
     try {
-      const { title, permissions } = await addRoleSchema.validateAsync(req.body);
+      const { title, permissions, description } = await addRoleSchema.validateAsync(req.body);
       await this.findRoleWithTitle(title);
-      const role = await RoleModel.create({ title, permissions });
+      const role = await RoleModel.create({ title, permissions, description });
       if (!role) throw createHttpError.InternalServerError("نقش ایجاد نشد");
       return res.status(StatusCodes.OK).json({
         statuseCode: StatusCodes.OK,
@@ -45,6 +46,24 @@ class RoleController extends Controller {
         statuseCode: StatusCodes.OK,
         data: {
           message: "حذف نقش با موفقیت انجام شد",
+        },
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
+  async updateRoleById(req, res, next) {
+    try {
+      const { id } = req.params;
+      const role = await this.findRoleWithIdOrTitle(id);
+      const data = copyObject(req.body);
+      deleteInvalidPropertyInObject(data, []);
+      const updateRoleResult = await RoleModel.updateOne({ _id: role._id }, { $set: data });
+      if (!updateRoleResult.modifiedCount) throw createHttpError.InternalServerError("ویرایش نقش انجام نشد");
+      return res.status(StatusCodes.OK).json({
+        statuseCode: StatusCodes.OK,
+        data: {
+          message: "ویرایش نقش با موفقیت انجام شد",
         },
       });
     } catch (error) {
