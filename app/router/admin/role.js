@@ -4,7 +4,8 @@ const { stringToArray } = require("../../http/middlewares/stringToArray");
 const router = require("express").Router();
 
 router.get("/list", RoleController.getAllRoles);
-router.post("/add", RoleController.createNewRole);
+router.post("/add", stringToArray("permissions"), RoleController.createNewRole);
+router.delete("/remove/:field", RoleController.removeRole);
 
 module.exports = {
   AdminApiRoleRouter: router,
