@@ -5,7 +5,7 @@ const router = require("express").Router();
 
 router.get("/list", checkPermission([PERMISSIONS.ADMIN]), UserController.getAllUsers);
 router.patch("/update-profile", UserController.updateUserProfile);
-router.get("/profile", UserController.userProfile);
+router.get("/profile", checkPermission([]), UserController.userProfile);
 
 module.exports = {
   AdminApiUserRouter: router,
