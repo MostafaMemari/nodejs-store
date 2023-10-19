@@ -8,7 +8,7 @@ const router = require("express").Router();
 
 router.use("/user", UserAuthRouter);
 router.use("/developer", DeveloperRoutes);
-router.use("/admin", verifyAccessToken, checkRole("ADMIN"), AdminRoutes);
+router.use("/admin", verifyAccessToken, AdminRoutes);
 
 router.use("/", HomeRoutes);
 

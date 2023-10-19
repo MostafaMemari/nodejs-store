@@ -28,7 +28,6 @@ class UserAuthController extends Controller {
   }
   async checkOtp(req, res, next) {
     try {
-      console.log(req.body);
       await checkOtpSchema.validateAsync(req.body);
       const { mobile, code } = req.body;
 
@@ -59,7 +58,7 @@ class UserAuthController extends Controller {
     if (result) {
       return await this.updateUser(mobile, { otp });
     }
-    return !!(await UserModel.create({ mobile, otp, roles: [ROLES.USER] }));
+    return !!(await UserModel.create({ mobile, otp, role: ROLES.USER }));
   }
   async checkExistUser(mobile) {
     const user = await UserModel.findOne({ mobile });

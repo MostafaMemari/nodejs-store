@@ -3,6 +3,7 @@ const { PermissionsModel } = require("../../../../models/permission");
 const Controller = require("../../controller");
 const { addPermissionSchema } = require("../../../validators/admin/RBAC.schema");
 const createHttpError = require("http-errors");
+const { copyObject, deleteInvalidPropertyInObject } = require("../../../../utils/functions");
 
 class PermissionController extends Controller {
   async getAllPermissions(req, res, next) {
@@ -50,6 +51,25 @@ class PermissionController extends Controller {
       next(error);
     }
   }
+  async updatePermissionById(req, res, next) {
+    try {
+      const { id } = req.params;
+      const permission = await this.findPermissionWithId(id);
+      const data = copyObject(req.body);
+      deleteInvalidPropertyInObject(data, []);
+      const updatePermissionResult = await PermissionsModel.updateOne({ _id: permission._id }, { $set: data });
+      if (!updatePermissionResult.modifiedCount) throw createHttpError.InternalServerError("ویرایش سطح دسترسی انجام نشد");
+      return res.status(StatusCodes.OK).json({
+        statuseCode: StatusCodes.OK,
+        data: {
+          message: "ویرایش سطح دسترسی با موفقیت انجام شد",
+        },
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
+
   async findPermissionWithName(name) {
     const permission = await PermissionsModel.findOne({ name });
     if (permission) throw createHttpError.BadRequest("سطح دسترسی مورد نظر قبلا ثبت شده است");
@@ -57,6 +77,7 @@ class PermissionController extends Controller {
   async findPermissionWithId(_id) {
     const permission = await PermissionsModel.findOne({ _id });
     if (!permission) throw createHttpError.NotFound("سطح دسترسی یافت نشد");
+    return permission;
   }
 }
 
