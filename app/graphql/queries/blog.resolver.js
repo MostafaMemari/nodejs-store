@@ -1,5 +1,5 @@
 const { GraphQLList } = require("graphql");
-const { blogType } = require("./blog.type");
+const { blogType } = require("../typeDefs/blog.type");
 const { BlogModel } = require("../../models/blogs");
 
 const BlogResolver = {
